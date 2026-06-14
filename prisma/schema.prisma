@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model SEOImportHistory {
+  id           String   @id @default(cuid())
+  shop         String
+  filename     String
+  uploadedAt   DateTime @default(now())
+  totalCount   Int
+  successCount Int
+  failureCount Int
+  importData   Json?
+}
+
+model SEOUpdateResult {
+  id                String   @id @default(cuid())
+  importId          String
+  productUrl        String
+  handle            String?
+  status            String
+  reason            String?
+  metaTitle         String?
+  metaDescription   String?
+  updatedAt         DateTime @default(now())
+}
+
+model ProductBundle {
+  id            String       @id @default(cuid())
+  shop          String
+  productId     String       // e.g. gid://shopify/Product/123456789
+  productHandle String       // e.g. custom-earrings
+  title         String       // e.g. Buy Together & Save!
+  discountType  String       // percentage, fixed_amount, or none
+  discountValue Float        @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  items         BundleItem[]
+}
+
+model BundleItem {
+  id            String        @id @default(cuid())
+  bundleId      String
+  bundle        ProductBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  productId     String        // e.g. gid://shopify/Product/987654321
+  productHandle String        // e.g. obsidian-necklace
+  title         String        // e.g. Obsidian Necklace
+  price         Float         // e.g. 29.99
+  image         String?       // e.g. https://...
+}
+
+model Coupon {
+  id                    String   @id @default(cuid())
+  shop                  String
+  code                  String
+  discountType          String   // percentage or fixed_amount
+  discountValue         Float    @default(0)
+  title                 String   // e.g. 10% Off Spring Special
+  description           String?  // e.g. Get 10% off your order
+  showOnStorefront      Boolean  @default(true)
+  minSubtotal           Float    @default(0)  // Minimum cart subtotal required
+  requiredProductId     String?  // Optional: product ID that must be in cart (e.g. gid://shopify/Product/123456789)
+  requiredProductTitle  String?  // Optional: product title for display (e.g. Crossbody Bag)
+  requiredProductHandle String?  // Optional: product handle for storefront checking
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+

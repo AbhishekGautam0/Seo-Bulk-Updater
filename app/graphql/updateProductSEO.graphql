@@ -1,0 +1,17 @@
+mutation UpdateProductSEO($product: ProductUpdateInput!) {
+  productUpdate(product: $product) {
+    product {
+      id
+      title
+      handle
+      seo {
+        title
+        description
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

@@ -1,0 +1,148 @@
+/* Coupon Applier Storefront Widget Stylesheet */
+
+.coupon-applier-widget {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.coupon-widget-wrapper {
+  background-color: rgba(18, 18, 18, 0.03);
+  border: 1px solid rgba(18, 18, 18, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: all 0.25s ease;
+}
+
+.coupon-widget-wrapper:focus-within {
+  border-color: rgba(18, 18, 18, 0.25);
+  background-color: rgba(18, 18, 18, 0.04);
+}
+
+.coupon-code-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid rgba(18, 18, 18, 0.15);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #121212;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.coupon-code-input:focus {
+  border-color: #121212;
+}
+
+.coupon-apply-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  background-color: #121212;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.coupon-apply-btn:hover {
+  opacity: 0.9;
+}
+
+.coupon-code-select {
+  width: 100%;
+  padding: 8px 30px 8px 10px;
+  border: 1px solid rgba(18, 18, 18, 0.15);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #121212;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a4a4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+}
+
+.coupon-code-select:focus {
+  border-color: #121212;
+}
+
+.coupon-error-banner {
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 8px;
+  padding-left: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.coupon-success-banner {
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+  padding-left: 2px;
+}
+
+.coupon-remove-link:hover {
+  color: #dc2626 !important;
+}
+
+/* Recalculated totals sub-elements */
+.totals__coupon-discount {
+  animation: couponFadeIn 0.3s ease-out forwards;
+}
+
+.totals__coupon-final {
+  animation: couponFadeIn 0.3s ease-out forwards;
+}
+
+.coupon-field-active .cart__ctas,
+.coupon-field-active .totals {
+  flex-wrap: wrap !important;
+}
+
+.coupon-widget-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.coupon-code-input {
+  flex: 1 1 180px;
+}
+
+.coupon-apply-btn {
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+@keyframes couponFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

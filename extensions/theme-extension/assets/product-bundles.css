@@ -1,0 +1,235 @@
+/* Product Bundles storefront styling */
+
+#shopify-block-product-bundles {
+  margin: 32px 0;
+  font-family: inherit;
+}
+
+.bundle-card-wrapper {
+  border: 1px solid var(--pb-card-border, #e5e7eb);
+  border-radius: 12px;
+  padding: 24px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.bundle-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+}
+
+/* Vertical Rows Container */
+.bundle-rows-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.bundle-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #f3f4f6;
+  gap: 16px;
+}
+
+.bundle-row-item:last-child {
+  border-bottom: none;
+}
+
+.bundle-row-image {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: #ffffff;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bundle-row-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+
+.bundle-row-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bundle-row-title {
+  font-size: 14px;
+  color: #2e3a47;
+  line-height: 1.4;
+}
+
+.bundle-row-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.bundle-row-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bundle-item-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  accent-color: var(--pb-btn-bg, #121212);
+}
+
+/* Footer & Purchasing */
+.bundle-purchase-footer {
+  border-top: 1px solid #f3f4f6;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bundle-pricing-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bundle-total-label {
+  font-size: 14px;
+  color: #666666;
+}
+
+.bundle-price-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bundle-total-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.bundle-compare-price {
+  font-size: 16px;
+  text-decoration: line-through;
+  color: #999999;
+}
+
+.bundle-savings-badge {
+  background-color: #e6f7ed;
+  color: #2e7d32;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  display: none;
+}
+
+.bundle-add-btn {
+  background-color: var(--pb-btn-bg, #121212);
+  color: var(--pb-btn-text, #ffffff);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease, background-color 0.2s ease;
+}
+
+.bundle-add-btn:hover {
+  filter: brightness(0.9);
+}
+
+.bundle-add-btn:active {
+  transform: scale(0.98);
+}
+
+.bundle-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Skeleton Loading styles */
+.product-bundles-skeleton {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  background-color: #ffffff;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 200px;
+  background-color: #f3f4f6;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+.skeleton-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.skeleton-item {
+  width: 70px;
+  height: 70px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+}
+
+/* Responsive mobile details */
+@media screen and (max-width: 767px) {
+  .bundle-card-wrapper {
+    padding: 16px;
+  }
+
+  .bundle-row-item {
+    padding: 10px 0;
+    gap: 12px;
+  }
+
+  .bundle-row-image {
+    width: 44px;
+    height: 44px;
+  }
+
+  .bundle-row-title {
+    font-size: 13px;
+  }
+
+  .bundle-purchase-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bundle-add-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

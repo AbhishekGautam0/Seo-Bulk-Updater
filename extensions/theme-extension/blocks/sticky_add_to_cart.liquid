@@ -1,0 +1,171 @@
+{% if product %}
+  <div
+    id="shopify-block-sticky-add-to-cart"
+    class="sticky-cart-container position-{{ block.settings.desktop_position }}"
+    style="
+      --sc-bg-color: {{ block.settings.bg_color }};
+      --sc-text-color: {{ block.settings.text_color }};
+      --sc-btn-bg: {{ block.settings.btn_bg }};
+      --sc-btn-text: {{ block.settings.btn_text }};
+      display: none;
+    "
+  >
+    <div class="sticky-cart-wrapper">
+      <!-- Product Info Section -->
+      <div class="sticky-cart-info">
+        <div class="sticky-cart-image-wrapper">
+          <img
+            id="sticky-cart-product-img"
+            src="{{ product.selected_or_first_available_variant.image | default: product.featured_image | image_url: width: 120 }}"
+            alt="{{ product.title }}"
+            width="60"
+            height="60"
+            loading="lazy"
+          >
+        </div>
+        <div class="sticky-cart-details">
+          <span class="sticky-cart-title">{{ product.title }}</span>
+          
+          <!-- Price display -->
+          <div class="sticky-cart-price-wrapper">
+            <span id="sticky-cart-price" class="sticky-cart-price">
+              {{ product.selected_or_first_available_variant.price | money }}
+            </span>
+            <span 
+              id="sticky-cart-compare-price" 
+              class="sticky-cart-compare-price"
+              style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display: none;{% endunless %}"
+            >
+              {{ product.selected_or_first_available_variant.compare_at_price | money }}
+            </span>
+            <span 
+              id="sticky-cart-savings" 
+              class="sticky-cart-savings"
+              style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display: none;{% endunless %}"
+            >
+              Save {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | money }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Panel -->
+      <div class="sticky-cart-actions">
+        <!-- Variant Swatch Selector -->
+        {% if product.variants.size > 1 %}
+          <div class="sticky-cart-swatches-container">
+            {% for option in product.options_with_values %}
+              {% assign option_name_downcase = option.name | downcase %}
+              <div class="sticky-cart-option-row" data-option-index="{{ forloop.index0 }}">
+                <span class="sticky-cart-option-label">{{ option.name }}:</span>
+                <div class="sticky-cart-option-values">
+                  {% for value in option.values %}
+                    {% assign is_selected = false %}
+                    {% if option.selected_value == value %}
+                      {% assign is_selected = true %}
+                    {% endif %}
+                    
+                    {% if option_name_downcase contains 'color' or option_name_downcase contains 'colour' %}
+                      <button 
+                        type="button" 
+                        class="sticky-cart-swatch swatch-color{% if is_selected %} active{% endif %}" 
+                        data-value="{{ value | escape }}"
+                        title="{{ value | escape }}"
+                        style="background-color: {{ value | downcase }};"
+                        aria-label="{{ value | escape }}"
+                      >
+                        <span class="swatch-checkmark"></span>
+                      </button>
+                    {% else %}
+                      <button 
+                        type="button" 
+                        class="sticky-cart-swatch swatch-button{% if is_selected %} active{% endif %}" 
+                        data-value="{{ value | escape }}"
+                        title="{{ value | escape }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Submit Form -->
+        <input type="hidden" id="sticky-cart-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button
+          id="sticky-cart-submit"
+          class="sticky-cart-btn"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+        >
+          {% if product.selected_or_first_available_variant.available %}
+            {{ block.settings.btn_label }}
+          {% else %}
+            Sold Out
+          {% endif %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Embed product variants JSON safely for our JavaScript asset to read
+    window.stickyCartProductVariants = {{ product.variants | json }};
+    window.stickyCartMoneyFormat = {{ shop.money_format | json }};
+  </script>
+
+  <!-- Load stylesheet and script -->
+  <link rel="stylesheet" href="{{ 'sticky-cart.css' | asset_url }}">
+  <script src="{{ 'sticky-cart.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Sticky Add to Cart",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button Background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_text",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "desktop_position",
+      "label": "Desktop Position",
+      "options": [
+        { "value": "bottom", "label": "Bottom Sticky Bar" },
+        { "value": "top", "label": "Top Sticky Bar" }
+      ],
+      "default": "bottom"
+    }
+  ]
+}
+{% endschema %}

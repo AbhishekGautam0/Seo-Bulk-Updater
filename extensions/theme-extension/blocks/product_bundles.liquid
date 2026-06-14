@@ -1,0 +1,77 @@
+{% if product %}
+  <div
+    id="shopify-block-product-bundles"
+    data-product-id="{{ product.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-app-server-url="{{ block.settings.app_server_url }}"
+    style="
+      --pb-btn-bg: {{ block.settings.btn_bg }};
+      --pb-btn-text: {{ block.settings.btn_text }};
+      --pb-card-border: {{ block.settings.card_border }};
+    "
+  >
+    <!-- Skeleton/Loader State -->
+    <div id="product-bundles-loader" class="product-bundles-skeleton" style="display: none;">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+      </div>
+    </div>
+
+    <!-- Rendered dynamic content container -->
+    <div id="product-bundles-content"></div>
+  </div>
+
+  <script>
+    // Pass standard theme currency formatting to JS helper
+    window.bundleMoneyFormat = "{{ shop.money_format }}";
+    // Pass main product details to JS
+    window.bundleMainProduct = {
+      id: "{{ product.id }}",
+      title: "{{ product.title }}",
+      handle: "{{ product.handle }}",
+      price: {{ product.price | json }},
+      image: "{{ product.featured_image | image_url: width: 120 }}",
+      variantId: "{{ product.selected_or_first_available_variant.id }}"
+    };
+  </script>
+
+  <!-- Load asset dependencies -->
+  <link rel="stylesheet" href="{{ 'product-bundles.css' | asset_url }}">
+  <script src="{{ 'product-bundles.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product Bundles",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "app_server_url",
+      "label": "App Server URL (Local Dev)",
+      "info": "Enter your ngrok base URL here for local testing (e.g. https://xxxx.ngrok-free.app). Leave empty in production to use the Shopify App Proxy.",
+      "default": "http://localhost:3000"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Add to Cart Button Background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "btn_text",
+      "label": "Add to Cart Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card Border Color",
+      "default": "#e5e7eb"
+    }
+  ]
+}
+{% endschema %}

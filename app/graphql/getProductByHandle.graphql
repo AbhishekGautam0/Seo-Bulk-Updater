@@ -1,0 +1,11 @@
+query GetProductByHandle($handle: String!) {
+  productByIdentifier(identifier: { handle: $handle }) {
+    id
+    title
+    handle
+    seo {
+      title
+      description
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<div
+  id="shopify-block-coupon-applier"
+  data-shop-domain="{{ shop.permanent_domain }}"
+  data-app-server-url="{{ block.settings.app_server_url }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  style="display: none;"
+></div>
+
+<script src="{{ 'coupon-applier.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'coupon-applier.css' | asset_url }}">
+
+{% schema %}
+{
+  "name": "Coupon Applier Widget",
+  "target": "body",
+  "settings": [
+    {
+      "type": "text",
+      "id": "app_server_url",
+      "label": "App Server URL (Local Dev)",
+      "info": "Enter your ngrok base URL for local testing. Leave empty in production to use the Shopify App Proxy.",
+      "default": "http://localhost:3000"
+    }
+  ]
+}
+{% endschema %}

@@ -36,6 +36,13 @@ Rules:
 6. App stores import history and row-level results in Prisma.
 7. Merchant can download the result CSV.
 
+## Batch Processing & Limits
+
+- **SEO Bulk Updater**: Processes updates in batches of **50** products at a time.
+- **Product Content Updater**: Processes updates in batches of **25** products at a time.
+- **Rate Limiting**: Utilizes a rate-limiting queue (`p-queue` with a concurrency of 1 and capacity of 40 requests/second) to safely respect Shopify's API rate limits.
+- **Recommended File Size**: Although there is no strict code limit, it is recommended to keep CSV files under **500 rows** per upload. This is because updates are processed synchronously within a single HTTP request, and larger uploads could run into server gateway or execution timeouts (such as serverless function timeouts of 10-30 seconds).
+
 ## Required Shopify Scope
 
 ```text
@@ -81,8 +88,8 @@ npm run typecheck
 ## Key Files
 
 - `app/routes/app.seo-bulk-updater.jsx` - main upload and update UI
-- `app/routes/api/parse-csv.server.jsx` - CSV parsing endpoint
-- `app/routes/api/update-seo.server.jsx` - bulk update endpoint
+- `app/routes/api.parse-csv.jsx` - CSV parsing endpoint
+- `app/routes/api.update-seo.jsx` - bulk update endpoint
 - `app/services/seoService.server.js` - Shopify GraphQL product lookup/update
 - `app/utils/csvParser.server.js` - CSV parsing and required-column validation
 - `app/utils/validators.server.js` - SEO field and URL validation
